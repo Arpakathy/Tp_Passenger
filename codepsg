@@ -1,0 +1,94 @@
+#Tp passenger
+import copy
+import collections
+from collections import Counter
+from itertools import count
+from random import random
+from xmlrpc.client import boolean
+
+
+#En tant qu'administrateur, je veux créer des bus.
+
+bus={
+    "ref" : 000,
+    "nbre_places" : 000,
+    "nbre_psg" : 000,
+    "nbre_kg" : 000
+}
+Listbus=[]
+def busAdd():
+    case=int(input("voulez-vous vraiment creer Ce bus? \n Tapez 1 pour oui \n Tapez 0 pour non"))
+    if case==1 :
+        Newbus = copy.deepcopy(bus)
+        Newbus["ref"] = int(input("entrez l'identifiant de votre bus: "))
+        Newbus["nbre_places"] = int(input("entrez le nombre de places disponibes de votre bus: "))
+        Newbus["nbre_kg"] = int(input("entrez le nombre de kilo que peut soutenir votre bus: "))
+        return Newbus
+
+nbrebus=int(input("Combien de bus souhaitez-vous creer? : "))
+for i in range(0, nbrebus):
+    NewbusAdd=busAdd()
+    Newbus=NewbusAdd.items()
+    Newbus=list(Newbus)
+    Listbus.append(Newbus)
+print(Listbus)
+
+#En tant qu'administrateur, je veux créer un passager
+
+psg={
+    'nom' : ' ',
+    'identifiant' : 000,
+    'nbre_kg' : 000,
+    'origine_psg' : True
+}
+Listpsg=[]
+def psgAdd():
+    case=int(input("voulez-vous vraiment creer ce passager? \n Tapez 1 pour oui \n Tapez 0 pour non"))
+    if case==1 :
+        Newpsg = copy.deepcopy(psg)
+        Newpsg["identifiant"] = input("entrez l'identifiant de votre passager?: ")
+        Newpsg["nom"] = input("Comment se nomme votre passager?: ")
+        Newpsg["nbre_kg"] = int(input("entrez la quantité de Kilos de votre passager: "))
+        Newpsg["origine_psg"] =boolean(input("Ce passager a-t-il deja ete dans bus?: \n Si c'est le cas entrez True \n Si ce n'est pas le Cas entrez False"))
+        return Newpsg
+nbrepsg=int(input("Combien de passagers souhaitez-vous creer? : "))
+for i in range(0, nbrepsg):
+    Newpsg=psgAdd()
+    Listpsg.append(Newpsg)
+
+#En tant qu'administrateur, je veux ajouter un passager à un bus
+
+assignation={
+    "NomDuPassager" : ' ',
+    "RefPassager" : 000,
+    "RefBus" : 000
+}
+assignationList=[]
+def AddToBus():
+    Newassignation=copy.deepcopy(assignation)
+    Newassignation["NomDuPassager"]=input("Entrez le nom de votre passager:")
+    Newassignation["RefPassager"]=int(input("Entrez la référence de votre passager:"))
+    Newassignation["RefBus"]=int(input("Entrez la référence de bus:"))
+    return Newassignation
+
+assign=int(input("Souhaitez-vous ajouter un utilisateur à un bus? \n Tapez 1 pour oui \n Tapez 0 pour non"))
+if assign==1:
+    Newassignation=AddToBus()
+    Newassign=tuple(Newassignation.items())
+    assignationList.append(Newassign)
+    print(assignationList)
+
+#En tant qu'administrateur, je veux connaitre le nombre place disponible dans un bus
+
+numb=int(input("entrez la référence du bus dont vous voules connaitre le nombre de passagers: "))
+AccNumb=("RefBus",numb)
+print(AccNumb)
+countBusPsg=int(assignationList.count(AccNumb))
+print(countBusPsg)
+    caseplaces=int(input("voulez-vousconnaitrez le nombre de places disponibles dans un bus?  \n Tapez 1 pour oui \n Tapez 0 pour non"))
+if caseplaces==1:
+
+    PlcBus=int(print(bus.get(numb)))
+    restBusPlc=countBusPsg - PlcBus 
+    print(restBusPlc)
+
